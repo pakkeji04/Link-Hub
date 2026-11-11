@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Metadatos y SEO -->
+  <title>@Pakkeji | Link Hub</title>
+  <meta name="description" content="Un esquizofrenico, proyectado, dislexico y con la realidad bien alterado que quiere compartir sus proyectadas">
+  <meta name="author" content="Pakkeji">
+  <meta name="theme-color" content="#0f1117">
+
+  <!-- Open Graph (Vista previa en Discord y redes) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Nombre | Enlaces Oficiales">
+  <meta property="og:description" content="Un dislexico bien pinche proyectado">
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/1a1d24/5865F2?text=TuNombre+Links">
+  <meta property="og:url" content="https://tuusuario.github.io/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nombre | Enlaces Oficiales">
+  <meta name="twitter:description" content="Oye cuidado viejo">
+  <meta name="twitter:image" content="https://via.placeholder.com/1200x630/1a1d24/5865F2?text=TuNombre+Links">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%235865F2'/><path d='M35 42c0-3 3-5 7-5s7 2 7 5-3 5-7 5-7-2-7-5zm16 0c0-3 3-5 7-5s7 2 7 5-3 5-7 5-7-2-7-5zM28 66c6 4 14 5 22 5s16-1 22-5c-2-3-5-6-8-8-4 2-9 3-14 3s-10-1-14-3c-3 2-6 5-8 8z' fill='white'/></svg>">
+
+  <!-- Estilos CSS -->
+  <style>
+    :root {
+      --bg-base: #0f1117;
+      --bg-card: #1a1d24;
+      --bg-card-hover: #222630;
+      --border-color: #262a34;
+      --border-hover: #3b4252;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent-discord: #5865F2;
+      --accent-discord-glow: rgba(88, 101, 242, 0.35);
+      --accent-youtube: #FF0000;
+      --accent-twitch: #9146FF;
+      --accent-x: #e7e9ea;
+      --accent-tiktok: #25F4EE;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --transition-smooth: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-stack);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2.5rem 1.25rem;
+      line-height: 1.5;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(88, 101, 242, 0.08) 0%, rgba(15, 17, 23, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hub-container {
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      margin-bottom: 1rem;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--border-color);
+      background-color: var(--bg-card);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      transition: transform var(--transition-smooth);
+    }
+
+    .avatar-wrapper:hover .avatar-img {
+      transform: scale(1.04);
+      border-color: var(--accent-discord);
+    }
+
+    .status-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 4px;
+      width: 18px;
+      height: 18px;
+      background-color: #22c55e;
+      border: 3px solid var(--bg-base);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+    }
+
+    .profile-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .verified-icon {
+      color: #38bdf8;
+      width: 18px;
+      height: 18px;
+    }
+
+    .profile-bio {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      max-width: 380px;
+    }
+
+    .referrer-banner {
+      display: none;
+      background: rgba(88, 101, 242, 0.12);
+      border: 1px solid rgba(88, 101, 242, 0.25);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      text-align: center;
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    .referrer-banner strong {
+      color: #fff;
+    }
+
+    .referrer-banner button {
+      background: none;
+      border: none;
+      color: #818cf8;
+      font-size: 0.8rem;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-left: 0.4rem;
+    }
+
+    .discord-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .featured-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(88, 101, 242, 0.16) 0%, rgba(26, 29, 36, 0.95) 100%);
+      border: 1px solid var(--accent-discord);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem 1.25rem;
+      text-decoration: none;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 0 20px var(--accent-discord-glow);
+      transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-smooth);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .featured-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.7s ease;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 30px rgba(88, 101, 242, 0.5);
+      border-color: #7983f5;
+    }
+
+    .featured-card:hover::before {
+      left: 140%;
+    }
+
+    .featured-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background-color: var(--accent-discord);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(88, 101, 242, 0.4);
+    }
+
+    .featured-icon-box svg {
+      width: 28px;
+      height: 28px;
+      fill: #ffffff;
+    }
+
+    .featured-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #93c5fd;
+      margin-bottom: 0.2rem;
+    }
+
+    .featured-badge-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulseDot 2s infinite;
+    }
+
+    .featured-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    .featured-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-arrow {
+      color: var(--text-muted);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform var(--transition-smooth), color var(--transition-smooth);
+    }
+
+    .featured-card:hover .card-arrow {
+      transform: translateX(4px);
+      color: #ffffff;
+    }
+
+    .discord-actions-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0 0.25rem;
+    }
+
+    .expiry-info {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .copy-invite-btn {
+      background: rgba(88, 101, 242, 0.14);
+      border: 1px solid rgba(88, 101, 242, 0.35);
+      color: #c7d2fe;
+      font-family: var(--font-stack);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.38rem 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background-color var(--transition-smooth), border-color var(--transition-smooth), transform var(--transition-smooth);
+    }
+
+    .copy-invite-btn:hover {
+      background: rgba(88, 101, 242, 0.28);
+      border-color: var(--accent-discord);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .copy-invite-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .link-card {
+      position: relative;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1.15rem;
+      text-decoration: none;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform var(--transition-smooth), background-color var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+      outline: none;
+    }
+
+    .link-card:hover, .link-card:focus-visible {
+      background-color: var(--bg-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    .link-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background-color var(--transition-smooth), color var(--transition-smooth);
+    }
+
+    .link-icon-box svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .link-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .link-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .link-card:hover .card-arrow {
+      transform: translateX(3px);
+      color: var(--text-main);
+    }
+
+    .link-card[data-platform="youtube"]:hover { border-color: rgba(255, 0, 0, 0.45); }
+    .link-card[data-platform="youtube"]:hover .link-icon-box { color: var(--accent-youtube); background: rgba(255, 0, 0, 0.1); }
+
+    .link-card[data-platform="twitch"]:hover { border-color: rgba(145, 70, 255, 0.45); }
+    .link-card[data-platform="twitch"]:hover .link-icon-box { color: var(--accent-twitch); background: rgba(145, 70, 255, 0.1); }
+
+    .link-card[data-platform="twitter"]:hover { border-color: rgba(231, 233, 234, 0.45); }
+    .link-card[data-platform="twitter"]:hover .link-icon-box { color: var(--accent-x); background: rgba(255, 255, 255, 0.1); }
+
+    .link-card[data-platform="tiktok"]:hover { border-color: rgba(37, 244, 238, 0.45); }
+    .link-card[data-platform="tiktok"]:hover .link-icon-box { color: var(--accent-tiktok); background: rgba(37, 244, 238, 0.1); }
+
+    .link-card.hidden-by-referrer {
+      display: none !important;
+    }
+
+    .hub-footer {
+      text-align: center;
+      margin-top: 1rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="hub-container">
+
+    <!-- Perfil: Avatar, nombre y biografía -->
+    <header class="profile-header">
+      <div class="avatar-wrapper">
+        <img class="avatar-img" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23222630'><rect width='100' height='100'/><circle cx='50' cy='38' r='18' fill='%235865F2'/><path d='M25 80c0-14 11-24 25-24s25 10 25 24z' fill='%235865F2'/></svg>" alt="Avatar de Nombre" id="user-avatar">
+        <span class="status-badge" title="Disponible / Online"></span>
+      </div>
+
+      <h1 class="profile-title">
+        <span id="user-name">Pakkeji</span>
+        <svg class="verified-icon" viewBox="0 0 24 24" fill="currentColor" aria-label="Verificado" title="Verificado">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+      </h1>
+
+      <p class="profile-bio" id="user-bio">
+        V-Tuber &amp; Streams, proyectado, esquizo, y bien pinche dislexico.
+      </p>
+    </header>
+
+    <!-- Banner dinámico según la red de origen -->
+    <div id="referrer-alert" class="referrer-banner" role="alert">
+      <span>👋 ¡Bienvenido desde <strong id="referrer-source-name">tu plataforma</strong>! Mira mis otros canales:</span>
+      <button id="show-all-links-btn" type="button">(Mostrar todos)</button>
+    </div>
+
+    <!-- Discord: Botón principal destacado y barra para copiar enlace -->
+    <section class="discord-wrapper" aria-label="Comunidad Principal">
+      <a href="https://discord.gg/TU_INVITE_DEFAULT" class="featured-card" id="discord-link" target="_blank" rel="noopener noreferrer">
+        <div class="featured-icon-box">
+          <svg viewBox="0 0 127.14 96.36">
+            <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,45.91,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,45.91,96.12,53,91.08,65.69,84.69,65.69Z"/>
+          </svg>
+        </div>
+        <div class="featured-content">
+          <div class="featured-badge">
+            <span class="featured-badge-dot"></span>
+            <span id="discord-badge-text">Invitación Temporal Activa</span>
+          </div>
+          <div class="featured-title">Servidor de Discord</div>
+          <div class="featured-desc" id="discord-subtext">Si quieres ver crimenes contra la ortografia aqui es</div>
+        </div>
+        <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <div class="discord-actions-bar">
+        <span class="expiry-info" id="discord-expiry-label">
+          ⏳ Enlace temporal anti-spam
+        </span>
+        <button type="button" class="copy-invite-btn" id="copy-discord-btn" title="Útil si vienes desde TikTok y el navegador interno bloquea la app">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span id="copy-btn-text">Copiar enlace</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Redes Sociales: Botones secundarios -->
+    <nav class="links-list" aria-label="Redes Sociales y Enlaces">
+
+      <!-- YouTube -->
+      <a href="https://www.youtube.com/@Pakkeji04" class="link-card" data-platform="youtube" target="_blank" rel="noopener noreferrer">
+        <div class="link-icon-box">
+          <svg viewBox="0 0 24 24">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </div>
+        <div class="link-info">
+          <div class="link-title">YouTube</div>
+          <div class="link-subtitle">No vas a encontrar mayor alergia a la pala que la mia</div>
+        </div>
+        <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <!-- Twitch -->
+      <a href="https://www.twitch.tv/pakkeji_vt" class="link-card" data-platform="twitch" target="_blank" rel="noopener noreferrer">
+        <div class="link-icon-box">
+          <svg viewBox="0 0 24 24">
+            <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+          </svg>
+        </div>
+        <div class="link-info">
+          <div class="link-title">Twitch</div>
+          <div class="link-subtitle">Si quieres ver jugadas epicas, a qui no es</div>
+        </div>
+        <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <!-- X (Twitter) -->
+      <a href="https://x.com/Pakkeji04" class="link-card" data-platform="twitter" target="_blank" rel="noopener noreferrer">
+        <div class="link-icon-box">
+          <svg viewBox="0 0 24 24">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </div>
+        <div class="link-info">
+          <div class="link-title">X (Twitter)</div>
+          <div class="link-subtitle">Oye cuidado viejo</div>
+        </div>
+        <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@pakkeji" class="link-card" data-platform="tiktok" target="_blank" rel="noopener noreferrer">
+        <div class="link-icon-box">
+          <svg viewBox="0 0 24 24">
+            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+          </svg>
+        </div>
+        <div class="link-info">
+          <div class="link-title">TikTok</div>
+          <div class="link-subtitle">Si quieres ver como me proyecto este es el lugar</div>
+        </div>
+        <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+    </nav>
+
+    <!-- Pie de página -->
+    <footer class="hub-footer">
+      <p>&copy; <span id="current-year">2026</span> <strong id="footer-name">Pakkeji</strong></p>
+      <p style="margin-top: 0.35rem; font-size: 0.72rem; opacity: 0.75;">
+        Alojado en GitHub Pages
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- Lógica JavaScript -->
+  <script>
+    // Configuración principal
+    const CONFIG = {
+      discordFallbackInvite: "https://discord.gg/TU_INVITE_DEFAULT",
+      discordGuildId: "TU_DISCORD_GUILD_ID",
+      inviteJsonPath: "./discord-invite.json", // Canal de bienvenida: 1568432339363696842
+      platforms: {
+        youtube: { name: "YouTube", match: ["youtube.com", "youtu.be"] },
+        twitch:  { name: "Twitch",  match: ["twitch.tv"] },
+        twitter: { name: "X (Twitter)", match: ["twitter.com", "x.com", "t.co"] },
+        tiktok:  { name: "TikTok",  match: ["tiktok.com"] }
+      }
+    };
+
+    let activeDiscordInvite = CONFIG.discordFallbackInvite;
+
+    // Actualización automática del enlace de Discord
+    async function initDiscordAutoLink() {
+      const linkElem = document.getElementById("discord-link");
+      const badgeElem = document.getElementById("discord-badge-text");
+      const subtextElem = document.getElementById("discord-subtext");
+      const expiryLabel = document.getElementById("discord-expiry-label");
+
+      try {
+        const res = await fetch(`${CONFIG.inviteJsonPath}?t=${Date.now()}`, { cache: "no-store" });
+        if (res.ok) {
+          const inviteData = await res.json();
+          if (inviteData && inviteData.url) {
+            activeDiscordInvite = inviteData.url;
+            if (inviteData.expires_in_minutes && expiryLabel) {
+              expiryLabel.textContent = `⏳ Se renueva cada ${inviteData.expires_in_minutes} min`;
+            } else if (inviteData.expires_in_hours && expiryLabel) {
+              expiryLabel.textContent = `⏳ Enlace válido por ${inviteData.expires_in_hours}h (se renueva solo)`;
+            }
+          }
+        }
+      } catch (e) {}
+
+      if (CONFIG.discordGuildId && CONFIG.discordGuildId !== "TU_DISCORD_GUILD_ID") {
+        try {
+          const widgetRes = await fetch(`https://discord.com/api/guilds/${CONFIG.discordGuildId}/widget.json`);
+          if (widgetRes.ok) {
+            const widgetData = await widgetRes.json();
+            if (activeDiscordInvite === CONFIG.discordFallbackInvite && widgetData.instant_invite) {
+              activeDiscordInvite = widgetData.instant_invite;
+            }
+            if (typeof widgetData.presence_count === "number") {
+              badgeElem.textContent = `${widgetData.presence_count} miembros en línea`;
+            }
+            if (widgetData.name) {
+              subtextElem.textContent = `${widgetData.name} • Comunidad activa`;
+            }
+          }
+        } catch (err) {}
+      }
+
+      linkElem.href = activeDiscordInvite;
+    }
+
+    // Copiar invitación al portapapeles
+    function initCopyDiscordButton() {
+      const copyBtn = document.getElementById("copy-discord-btn");
+      const copyText = document.getElementById("copy-btn-text");
+      if (!copyBtn || !copyText) return;
+
+      copyBtn.addEventListener("click", async () => {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(activeDiscordInvite);
+          } else {
+            const tempInput = document.createElement("textarea");
+            tempInput.value = activeDiscordInvite;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+          }
+          copyText.textContent = "¡Copiado! Pégalo en Discord";
+          setTimeout(() => {
+            copyText.textContent = "Copiar enlace";
+          }, 3000);
+        } catch (err) {
+          copyText.textContent = "Error al copiar";
+        }
+      });
+    }
+
+    // Ocultar red social de origen (Referrer / UTM)
+    function initReferrerAdaptation() {
+      const referrer = (document.referrer || "").toLowerCase();
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryRef = (urlParams.get("ref") || urlParams.get("source") || urlParams.get("utm_source") || "").toLowerCase();
+
+      let matchedKey = null;
+
+      for (const [key, info] of Object.entries(CONFIG.platforms)) {
+        if (queryRef === key || (referrer && info.match.some(domain => referrer.includes(domain)))) {
+          matchedKey = key;
+          break;
+        }
+      }
+
+      if (!matchedKey) return;
+
+      const targetCard = document.querySelector(`.link-card[data-platform="${matchedKey}"]`);
+      if (targetCard) {
+        targetCard.classList.add("hidden-by-referrer");
+
+        const banner = document.getElementById("referrer-alert");
+        const sourceName = document.getElementById("referrer-source-name");
+        const showAllBtn = document.getElementById("show-all-links-btn");
+
+        if (banner && sourceName) {
+          sourceName.textContent = CONFIG.platforms[matchedKey].name;
+          banner.style.display = "block";
+
+          if (showAllBtn) {
+            showAllBtn.addEventListener("click", () => {
+              targetCard.classList.remove("hidden-by-referrer");
+              banner.style.display = "none";
+            });
+          }
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const yearElem = document.getElementById("current-year");
+      if (yearElem) yearElem.textContent = new Date().getFullYear();
+
+      initDiscordAutoLink();
+      initCopyDiscordButton();
+      initReferrerAdaptation();
+    });
+  </script>
+</body>
+</html>
