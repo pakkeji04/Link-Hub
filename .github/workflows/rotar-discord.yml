@@ -1,0 +1,40 @@
+name: Rotar Enlace de Discord (30 min)
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  crear-invitacion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generar nueva invitacion en Discord
+        env:
+          BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          CHANNEL_ID: "1568432339363696842"
+        run: |
+          RES=$(curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/invites" \
+            -H "Authorization: Bot ${BOT_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d '{"max_age": 3600, "max_uses": 0, "unique": true}')
+          CODE=$(echo $RES | jq -r '.code')
+          if [ "$CODE" != "null" ] && [ -n "$CODE" ]; then
+            echo "{\"url\": \"https://discord.gg/${CODE}\", \"expires_in_minutes\": 30}" > discord-invite.json
+          else
+            echo "Error de Discord API: $RES"
+            exit 1
+          fi
+
+      - name: Guardar enlace en la web
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add discord-invite.json
+          git diff --staged --quiet || git commit -m "Actualizar link de Discord"
+          git push
